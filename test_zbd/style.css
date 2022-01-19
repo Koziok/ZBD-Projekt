@@ -1,0 +1,242 @@
+/*
+Baza danych:                http://localhost/phpmyadmin/
+Strona:                     http://localhost/test_zbd/index.html
+Pliki do folderu htdocs:    C:\xampp\htdocs\test_zbd
+login: root
+haslo: -
+XAMPP: 
+    MySQL - Port 3306
+    Apache - Port 80, 443
+*/
+
+:root{
+    --dark-color-1: #151019;
+    --dark-color-2: #242533;
+    --dark-color-3: #2b3447;
+    --accent-color: #61F5AA;
+    --light-color: #81bdf1;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body { 
+    min-height: 100vh;
+    background: var(--dark-color-1);
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+header {
+    background: linear-gradient(to left, var(--accent-color), var(--light-color));
+    font-size: 1.5rem;
+    box-shadow: 0 0 1em var(--dark-color-3);
+    top: 0;
+}
+
+content {
+    color: white;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    letter-spacing: 0.1em;
+}
+
+h2 {
+    color: white;
+    text-align: center;
+    opacity: 50%;
+}
+
+.custom-select {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    position: relative;
+    color: white;
+}
+
+label, input {
+    margin: 0.4rem 0;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+input[type=checkbox] {
+    width: 5%;
+    margin: 0.4rem; 
+}
+
+.custom-select input[type=submit] {
+    color: var(--dark-color-1);
+    background-color: var(--accent-color);
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    width: 100%;
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.custom-select input[type=submit]:hover {
+    border: 1px solid var(--light-color);
+    background-color: var(--light-color);
+    cursor: pointer;
+}
+
+.custom-select select {
+    background-color: var(--dark-color-2);
+    color: white;
+    padding: 0.75rem;
+    min-width: 12rem;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+    margin: 0.4rem 0;
+    width: 100%;
+}
+
+.custom-select select option {
+    padding: 0.5rem;
+}
+  
+.custom-select select:hover {
+    cursor: pointer;
+}
+
+table {
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem;
+    font-size: 1.1rem;;
+}
+
+th, td {   
+    padding: 0.5rem;
+    text-align: left;
+}
+
+th {
+    border: 1px solid var(--dark-color-2);
+    background-color: var(--dark-color-2);
+}
+
+td {
+    border: 1px solid var(--dark-color-2);
+    background-color: var(--dark-color-2);
+    transition: background-color 300ms ease, border 300ms ease;
+}
+
+td:hover {
+    border: 1px solid var(--accent-color);
+    background-color: var(--accent-color);
+    color: var(--dark-color-1);
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    position: relative;
+}
+
+.loader div {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;    
+    display: inline-block;
+    margin: 1rem;
+    animation: scaling 2.5s ease-in-out infinite;
+}
+
+.loader h2 {
+    position: absolute;
+    color: white;
+    bottom: 0;
+    opacity: 30%;
+}
+
+@keyframes scaling {
+    0%, 100%{
+        transform: scale(1);
+        background-color: var(--accent-color);
+        box-shadow: 0 0 1em var(--accent-color);      
+    }
+    50% {
+        transform: scale(0.2);
+        background-color: var(--light-color);
+        box-shadow: 0 0 1em var(--light-color);      
+    }
+}
+
+.loader div:nth-child(1) {
+    animation-delay: 0.2s;
+}
+.loader div:nth-child(2) {
+    animation-delay: 0.4s;
+}
+.loader div:nth-child(3) {
+    animation-delay: 0.6s;
+}
+.loader div:nth-child(4) {
+    animation-delay: 0.8s;
+}
+.loader div:nth-child(5) {
+    animation-delay: 1.0s;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
+    text-align: right;
+    color: white;
+}
+
+li {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 1rem;
+    font-weight: 600;
+    color: var(--dark-color-1);
+    position: relative;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul::after {
+    content: '';
+    width: 0;
+    height: 10%;
+    background-color: var(--dark-color-1);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 50%;
+    transition: width 300ms ease, opacity 300ms ease;
+}
+
+ul:hover::after {
+    width: 100%;
+    opacity: 100%;
+}
