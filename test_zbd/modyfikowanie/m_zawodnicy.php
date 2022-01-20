@@ -52,17 +52,19 @@
                     $row3 = null;
                     if ($choose >= 1) {
                         $row3=mysqli_fetch_assoc($result3);
-                    }                      
+                    }
+                    $id_zawodnika = isset($row3['id_zawodnika']) ? $row3['id_zawodnika'] : '';   
+                    $id_nazwa_druzyny = isset($row3['nazwa_druzyny']) ? $row3['nazwa_druzyny'] : '';               
 
                     echo '
                     <div class="custom-select">
                         <form method="post" action="" id="form2">
                             <label for="id">ID:</label><br>    
-                            <input type="text" name="id" value="'.$row3['id_zawodnika'].'" readonly><br>                  
+                            <input type="text" name="id" value="'.$id_zawodnika.'" readonly><br>                  
 
                             <label for="choose">Drużyna:</label><br>
                             <select name="choose2">
-                                <option>'.$row3['nazwa_druzyny'].'</option>';        
+                                <option>'.$id_nazwa_druzyny.'</option>';        
 
                     $query4="SELECT nazwa_druzyny from druzyny order by nazwa_druzyny";
                     $result4=mysqli_query($conn, $query4);

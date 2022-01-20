@@ -55,24 +55,32 @@
                 </div>';
 
                 $choose = isset($_POST['choose']) ? $_POST['choose'] : '';
+                $check2=1;
 
-                $check_query1="SELECT nazwa_wydawcy FROM wspolprace where nazwa_wydawcy='$choose'";
-                $check_result1=mysqli_query($conn, $check_query1);
-                $check1=mysqli_num_rows($check_result1);
-
-                if ($check1 == 0)
+                if ($choose != 'Wybierz wydawcę...')
                 {
-                    if ($choose != 'Wybierz wydawcę...' && strlen($choose) > 1) {
-                        $query3="DELETE from wydawcy where nazwa_wydawcy='$choose'";
-                        if (mysqli_query($conn, $query3) == TRUE) {
-                            echo "<meta http-equiv='refresh' content='0'>"; 
-                        }     
-                    }
-                                
+                    $check_query1="SELECT nazwa_wydawcy FROM wspolprace where nazwa_wydawcy='$choose'";
+                    $check_result1=mysqli_query($conn, $check_query1);
+                    $check1=mysqli_num_rows($check_result1);//
+                    $check2=0;
                 }
-                else
+
+                if ($check2==0)
                 {
-                    echo '<center>Nie udało się usunąć rekordu. Upewnij się, że nie jest on używany w innych tabelach!<center>';
+                    if ($check1 == 0)
+                    {
+                        if ($choose != 'Wybierz wydawcę...' && strlen($choose) > 1) {
+                            $query3="DELETE from wydawcy where nazwa_wydawcy='$choose'";
+                            if (mysqli_query($conn, $query3) == TRUE) {
+                                echo "<meta http-equiv='refresh' content='0'>"; 
+                            }     
+                        }
+                                    
+                    }
+                    else
+                    {
+                        echo '<center>Nie udało się usunąć rekordu. Upewnij się, że nie jest on używany w innych tabelach!<center>';
+                    }
                 }
 
                 

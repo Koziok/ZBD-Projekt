@@ -41,7 +41,7 @@
                         <input type="text" id="silnik" name="silnik" value="Silnik"><br>
 
                         <label for="date">Data powstania:</label><br>
-                        <input type="date" id="date" name="date" value="2000-01-01"><br>
+                        <input type="date" id="date" name="date" value="2022-01-01"><br>
 
                         <input type="submit" value="Dodaj">
                     </form>

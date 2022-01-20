@@ -52,17 +52,19 @@
                     $row3 = null;
                     if ($choose >= 1) {
                         $row3=mysqli_fetch_assoc($result3);
-                    }                      
+                    }
+                    $id_dewelopera = isset($row3['id_dewelopera']) ? $row3['id_dewelopera'] : '';
+                    $nazwa_producenta = isset($row3['nazwa_producenta']) ? $row3['nazwa_producenta'] : '';                       
 
                     echo '
                     <div class="custom-select">
                         <form method="post" action="" id="form2">
                             <label for="id">ID:</label><br>    
-                            <input type="text" name="id" value="'.$row3['id_dewelopera'].'" readonly><br>                  
+                            <input type="text" name="id" value="'.$id_dewelopera.'" readonly><br>                  
 
                             <label for="choose">Producent (pracodawca):</label><br>
                             <select name="choose2">
-                                <option>'.$row3['nazwa_producenta'].'</option>';        
+                                <option>'.$nazwa_producenta.'</option>';        
 
                     $query4="SELECT nazwa_producenta from producenci order by nazwa_producenta";
                     $result4=mysqli_query($conn, $query4);

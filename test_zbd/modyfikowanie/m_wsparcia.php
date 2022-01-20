@@ -47,6 +47,8 @@
                 $choose = isset($_POST['choose']) ? $_POST['choose'] : '';
 
                 $choose_array=array('a','b');
+                $silnik='';
+                $jezyk='';
 
                 if($choose != 'Wybierz wsparcie...')
                 {
@@ -59,22 +61,26 @@
                     $jezyk=$choose_array[1];
                 }
 
+                
                 if (is_string($choose) == 1) {
                     $query3="SELECT nazwa_silnika, nazwa_jezyka, maks_wersja_silnika from wsparcia where nazwa_silnika='$silnik' and nazwa_jezyka='$jezyk'";
                     $result3=mysqli_query($conn, $query3);
                     $row3 = null;
                     if (strlen($choose) >= 1) {
                         $row3=mysqli_fetch_assoc($result3);
-                    }                      
+                    }
+                    $nazwa_silnika = isset($row3['nazwa_silnika']) ? $row3['nazwa_silnika'] : '';   
+                    $nazwa_jezyka = isset($row3['nazwa_jezyka']) ? $row3['nazwa_jezyka'] : '';  
+                    $maks_wersja_silnika = isset($row3['maks_wersja_silnika']) ? $row3['maks_wersja_silnika'] : ''; 
 
                     echo '
                     <div class="custom-select">
                         <form method="post" action="" id="form2">
                             <label for="wsparcie">Wsparcie:</label><br>    
-                            <input type="text" name="wsparcie" value="'.$row3['nazwa_silnika'].'   '.$row3['nazwa_jezyka'].'" readonly><br>                  
+                            <input type="text" name="wsparcie" value="'.$nazwa_silnika.'   '.$nazwa_jezyka.'" readonly><br>             
 
                             <label for="choose2">Maksymalna wersja silnika:</label><br>
-                            <input type="text" name="choose2" value="'.$row3['maks_wersja_silnika'].'"><br> 
+                            <input type="text" name="choose2" value="'.$maks_wersja_silnika.'"><br>
                             <br>
                             <input type="submit" value="Modyfikuj" form="form2">
                         </form>
@@ -84,8 +90,9 @@
                     $wsparcie = isset($_POST['wsparcie']) ? $_POST['wsparcie'] : ''; 
                     
                     $wsparcie_array=array('a','b');
+                    $check4=1;
 
-                    if($wsparcie != 'Wybierz wsparcie...')
+                    if(!empty($wsparcie))
                     {
                         $wsparcie_array=explode('   ', $wsparcie);
                         if(!isset($wsparcie_array[1]))
@@ -94,19 +101,26 @@
                         }
                         $silnik2=$wsparcie_array[0];
                         $jezyk2=$wsparcie_array[1];
+                        $check4=0;
                     }
 
-                    if (empty($choose2))
+                    if($check4==0 && !empty($silnik2))
                     {
-                        $query5="UPDATE wsparcia set maks_wersja_silnika=NULL where nazwa_silnika='$silnik2' and nazwa_jezyka='$jezyk2'";
-                    }
-                    else
-                    {
-                        $query5="UPDATE wsparcia set maks_wersja_silnika='$choose2' where nazwa_silnika='$silnik2' and nazwa_jezyka='$jezyk2'";
-                    }           
-                    if (mysqli_query($conn, $query5) == TRUE) {
-                        echo "<center>Zmodyfikowano maksymalną wersję silnika</center>";
-                    }
+                        if (empty($choose2))
+                        {
+                            $query5="UPDATE wsparcia set maks_wersja_silnika=NULL where nazwa_silnika='$silnik2' and nazwa_jezyka='$jezyk2'";
+                            if (mysqli_query($conn, $query5) == TRUE) {
+                                echo "<center>Zmodyfikowano maksymalną wersję silnika</center>";
+                            }
+                        }
+                        else
+                        {
+                            $query5="UPDATE wsparcia set maks_wersja_silnika='$choose2' where nazwa_silnika='$silnik2' and nazwa_jezyka='$jezyk2'";
+                            if (mysqli_query($conn, $query5) == TRUE) {
+                                echo "<center>Zmodyfikowano maksymalną wersję silnika</center>";
+                            }
+                        } 
+                    }                                         
                 }
 
                 $query2="SELECT nazwa_silnika, nazwa_jezyka, coalesce(maks_wersja_silnika, 'najnowsza') as wersja from wsparcia order by nazwa_silnika, nazwa_jezyka";

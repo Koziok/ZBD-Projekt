@@ -76,28 +76,37 @@
                 $druzyna = isset($_POST['druzyna']) ? $_POST['druzyna'] : '';
                 $nagroda = isset($_POST['nagroda']) ? $_POST['nagroda'] : '';
                 $miejsce = isset($_POST['miejsce']) ? $_POST['miejsce'] : '';
+                $check1=1;
+
+                if ($turniej != 'Wybierz drużynę...' && $druzyna != 'Wybierz drużynę...')
+                {
+                    $check_query="SELECT nazwa_turnieju, nazwa_druzyny FROM udzialy where nazwa_turnieju='$turniej' and nazwa_druzyny='$druzyna'";
+                    $check_result=mysqli_query($conn, $check_query);
+                    $check=mysqli_num_rows($check_result);
+                    $check1=0;
+                }
                 
-                $check_query="SELECT nazwa_turnieju, nazwa_druzyny FROM udzialy where nazwa_turnieju='$turniej' and nazwa_druzyny='$druzyna'";
-                $check_result=mysqli_query($conn, $check_query);
-                $check=mysqli_num_rows($check_result);
-                if($check == 0)
+                if ($check1 == 0)
                 {
-                    echo "<center>";
-
-                    if ($turniej != 'Wybierz turniej...' && $druzyna != 'Wybierz drużynę...' && !empty($nagroda) && !empty($miejsce)) 
+                    if($check == 0)
                     {
-                        $query3="INSERT INTO udzialy(`nagroda_pieniezna`, `zajete_miejsce`, `nazwa_turnieju`, `nazwa_druzyny`) values ('$nagroda', '$miejsce', '$turniej', '$druzyna')";
-                        if (mysqli_query($conn, $query3) == TRUE) {
-                            echo "Dodano udział drużyny w turnieju";
-                        }
-                    }
+                        echo "<center>";
 
-                    echo "</center>";
-                }
-                else
-                {
-                    echo '<center>Dodanie zakończyło się niepowodzeniem! <br> Ta drużyna już bierze udział w tym turnieju!</center><br>';
-                }
+                        if ($turniej != 'Wybierz turniej...' && $druzyna != 'Wybierz drużynę...' && !empty($nagroda) && !empty($miejsce)) 
+                        {
+                            $query3="INSERT INTO udzialy(`nagroda_pieniezna`, `zajete_miejsce`, `nazwa_turnieju`, `nazwa_druzyny`) values ('$nagroda', '$miejsce', '$turniej', '$druzyna')";
+                            if (mysqli_query($conn, $query3) == TRUE) {
+                                echo "Dodano udział drużyny w turnieju";
+                            }
+                        }
+
+                        echo "</center>";
+                    }
+                    else
+                    {
+                        echo '<center>Dodanie zakończyło się niepowodzeniem! <br> Ta drużyna już bierze udział w tym turnieju!</center><br>';
+                    }
+                }               
 
                 CloseCon($conn);
             ?> 

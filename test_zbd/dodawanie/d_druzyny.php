@@ -41,7 +41,7 @@
                         <input type="text" id="druzyna" name="druzyna" value="Druzyna"><br>
 
                         <label for="date">Data założenia:</label><br>
-                        <input type="date" id="date" name="date" value="2000-01-01"><br>
+                        <input type="date" id="date" name="date" value="2022-01-01"><br>
 
                         <label for="kraj">Kraj założenia:</label><br>
                         <input type="text" id="kraj" name="kraj" value="Polska" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"><br>

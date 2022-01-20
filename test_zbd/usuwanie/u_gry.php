@@ -55,6 +55,7 @@
                 </div>';
 
                 $choose = isset($_POST['choose']) ? $_POST['choose'] : '';
+                $check3=1;
 
                 if ($choose != 'Wybierz grę...')
                 {
@@ -72,22 +73,26 @@
                     $check_query2="SELECT tytul, nazwa_producenta FROM wspolprace where tytul='$title' and nazwa_producenta='$producent'";
                     $check_result2=mysqli_query($conn, $check_query2);
                     $check2=mysqli_num_rows($check_result2);
+                    $check3=0;
                 }
                 
-                if ($check1 == 0 && $check2 == 0)
+                if($check3==0)
                 {
-                    if ($choose != 'Wybierz grę...' && strlen($choose) > 1) {
-                        $query3="DELETE from gry where tytul='$title' and nazwa_producenta='$producent'";
-                        if (mysqli_query($conn, $query3) == TRUE) {
-                            echo "<meta http-equiv='refresh' content='0'>";
-                        }                   
+                    if ($check1 == 0 && $check2 == 0)//
+                    {
+                        if ($choose != 'Wybierz grę...' && strlen($choose) > 1) {
+                            $query3="DELETE from gry where tytul='$title' and nazwa_producenta='$producent'";
+                            if (mysqli_query($conn, $query3) == TRUE) {
+                                echo "<meta http-equiv='refresh' content='0'>";
+                            }                   
+                        }
+                    }          
+                    else
+                    {
+                        echo '<center>Nie udało się usunąć rekordu. Upewnij się, że nie jest on używany w innych tabelach!<center>';
                     }
-                }          
-                else
-                {
-                    echo '<center>Nie udało się usunąć rekordu. Upewnij się, że nie jest on używany w innych tabelach!<center>';
                 }
-
+                
                 $query2="SELECT tytul, nazwa_producenta, data_wydania, czy_turniejowe, nazwa_silnika from gry";
                 $result2=mysqli_query($conn, $query2);
                 

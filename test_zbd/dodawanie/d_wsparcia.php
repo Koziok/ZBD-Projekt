@@ -71,37 +71,45 @@
                 $wersja = isset($_POST['wersja']) ? $_POST['wersja'] : '';
                 $silnik = isset($_POST['silnik']) ? $_POST['silnik'] : '';
                 $jezyk = isset($_POST['jezyk']) ? $_POST['jezyk'] : '';
+                $check1=1;
 
+                if ($silnik != 'Wybierz silnik...' && $jezyk != 'Wybierz język...')
+                {
+                    $check_query="SELECT nazwa_silnika, nazwa_jezyka FROM wsparcia where nazwa_silnika='$silnik' and nazwa_jezyka='$jezyk'";
+                    $check_result=mysqli_query($conn, $check_query);
+                    $check=mysqli_num_rows($check_result);
+                    $check1=0;
+                }
                 
-                $check_query="SELECT nazwa_silnika, nazwa_jezyka FROM wsparcia where nazwa_silnika='$silnik' and nazwa_jezyka='$jezyk'";
-                $check_result=mysqli_query($conn, $check_query);
-                $check=mysqli_num_rows($check_result);
-                if($check == 0)
+                if ($check1 == 0)
                 {
-                    echo "<center>";
-
-                    if ($silnik != 'Wybierz silnik...' && $jezyk != 'Wybierz jezyk...') 
+                    if($check == 0)
                     {
-                        if (empty($wersja))
+                        echo "<center>";
+
+                        if ($silnik != 'Wybierz silnik...' && $jezyk != 'Wybierz jezyk...') 
                         {
-                            $query3="INSERT INTO wsparcia(`nazwa_silnika`, `nazwa_jezyka`, `maks_wersja_silnika`) values ('$silnik', '$jezyk', NULL)";
+                            if (empty($wersja))
+                            {
+                                $query3="INSERT INTO wsparcia(`nazwa_silnika`, `nazwa_jezyka`, `maks_wersja_silnika`) values ('$silnik', '$jezyk', NULL)";
+                            }
+                            else
+                            {
+                                $query3="INSERT INTO wsparcia(`nazwa_silnika`, `nazwa_jezyka`, `maks_wersja_silnika`) values ('$silnik', '$jezyk', '$wersja')";
+                            }                  
+                            if (mysqli_query($conn, $query3) == TRUE) {
+                                echo "Dodano wsparcie języka";
+                            }
                         }
-                        else
-                        {
-                            $query3="INSERT INTO wsparcia(`nazwa_silnika`, `nazwa_jezyka`, `maks_wersja_silnika`) values ('$silnik', '$jezyk', '$wersja')";
-                        }                  
-                        if (mysqli_query($conn, $query3) == TRUE) {
-                            echo "Dodano wsparcie języka";
-                        }
+
+                        echo "</center>";
                     }
-
-                    echo "</center>";
+                    else
+                    {
+                        echo '<center>Dodanie zakończyło się niepowodzeniem! <br> Takie wsparcie języka już istnieje w bazie danych!</center><br>';
+                    }
                 }
-                else
-                {
-                    echo '<center>Dodanie zakończyło się niepowodzeniem! <br> Takie wsparcie języka już istnieje w bazie danych!</center><br>';
-                }
-
+                
                 CloseCon($conn);
             ?> 
         </div>             

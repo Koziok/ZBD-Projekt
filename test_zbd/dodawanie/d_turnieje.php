@@ -41,10 +41,10 @@
                         <input type="text" id="turniej" name="turniej" value="Turniej"><br>
 
                         <label for="date_r">Data rozpoczęcia:</label><br>
-                        <input type="date" id="date_r" name="date_r" value="2000-01-01"><br>
+                        <input type="date" id="date_r" name="date_r" value="2022-01-01"><br>
 
                         <label for="date_z">Data zakończenia:</label><br>
-                        <input type="date" id="date_z" name="date_z" value="2000-01-01"><br>
+                        <input type="date" id="date_z" name="date_z" value="2022-01-01"><br>
 
                         <label for="nagrody">Pula nagród pieniężnych:</label><br>
                         <input type="text" id="nagrody" name="nagrody" value="1.000.000 USD"><br>

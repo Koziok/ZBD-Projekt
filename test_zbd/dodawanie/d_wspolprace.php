@@ -62,7 +62,7 @@
                         </select><br>
 
                         <label for="date">Data rozpoczęcia współpracy:</label><br>
-                        <input type="date" id="date" name="date" value="2000-01-01"><br>
+                        <input type="date" id="date" name="date" value="2022-01-01"><br>
 
                         <input type="submit" value="Dodaj">
                     </form>
@@ -72,6 +72,7 @@
                 $wydawca = isset($_POST['wydawca']) ? $_POST['wydawca'] : '';
                 $date = isset($_POST['date']) ? $_POST['date'] : '';
                 $game_array=array('a','b');
+                $check1=1;
 
                 if($game != 'Wybierz grę...')
                 {
@@ -82,31 +83,35 @@
                     }
                     $title=$game_array[0];
                     $producent=$game_array[1];
+
+                    $check_query="SELECT tytul, nazwa_producenta, nazwa_wydawcy FROM wspolprace where tytul='$title' and nazwa_producenta='$producent' and nazwa_wydawcy='$wydawca'";
+                    $check_result=mysqli_query($conn, $check_query);
+                    $check=mysqli_num_rows($check_result);
+                    $check1=0;
+                }
+
+                if ($check1 == 0)
+                {
+                    if($check == 0)
+                    {
+                        echo "<center>";
+
+                        if ($game != 'Wybierz grę...' && $wydawca != 'Wybierz wydawcę...') 
+                        {
+                            $query3="INSERT INTO wspolprace(`data_rozpoczecia`, `tytul`, `nazwa_producenta`, `nazwa_wydawcy`) values ('$date', '$title', '$producent', '$wydawca')";
+                            if (mysqli_query($conn, $query3) == TRUE) {
+                                echo "Dodano współpracę";
+                            }
+                        }
+
+                        echo "</center>";
+                    }
+                    else
+                    {
+                        echo '<center>Dodanie zakończyło się niepowodzeniem! <br> Taka współpraca już istnieje w bazie danych!</center><br>';
+                    }
                 }
                 
-
-                $check_query="SELECT tytul, nazwa_producenta, nazwa_wydawcy FROM wspolprace where tytul='$title' and nazwa_producenta='$producent' and nazwa_wydawcy='$wydawca'";
-                $check_result=mysqli_query($conn, $check_query);
-                $check=mysqli_num_rows($check_result);
-                if($check == 0)
-                {
-                    echo "<center>";
-
-                    if ($game != 'Wybierz grę...' && $wydawca != 'Wybierz wydawcę...') 
-                    {
-                        $query3="INSERT INTO wspolprace(`data_rozpoczecia`, `tytul`, `nazwa_producenta`, `nazwa_wydawcy`) values ('$date', '$title', '$producent', '$wydawca')";
-                        if (mysqli_query($conn, $query3) == TRUE) {
-                            echo "Dodano współpracę";
-                        }
-                    }
-
-                    echo "</center>";
-                }
-                else
-                {
-                    echo '<center>Dodanie zakończyło się niepowodzeniem! <br> Taka współpraca już istnieje w bazie danych!</center><br>';
-                }
-
                 CloseCon($conn);
             ?> 
         </div>             

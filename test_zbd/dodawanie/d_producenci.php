@@ -41,7 +41,7 @@
                         <input type="producent" id="producent" name="producent" value="Producent"><br>
 
                         <label for="date">Data powstania:</label><br>
-                        <input type="date" id="date" name="date" value="2000-01-01"><br>
+                        <input type="date" id="date" name="date" value="2022-01-01"><br>
 
                         <label for="country">Siedziba:</label><br>
                         <input type="country" id="country" name="country" value="Poland" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"><br>

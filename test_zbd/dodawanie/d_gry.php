@@ -41,7 +41,7 @@
                         <input type="text" id="title" name="title" value="Tytul"><br>
 
                         <label for="date">Data wydania:</label><br>
-                        <input type="date" id="date" name="date" value="2000-01-01"><br>
+                        <input type="date" id="date" name="date" value="2022-01-01"><br>
 
                         <label for="tournament">Czy gra jest turniejowa:</label><br>
                         <select name="tournament" id=""tournament"">
@@ -86,6 +86,8 @@
                 $check_query="SELECT tytul, nazwa_producenta FROM gry where tytul='$title' and nazwa_producenta='$producent'";
                 $check_result=mysqli_query($conn, $check_query);
                 $check=mysqli_num_rows($check_result);
+
+
                 if($check == 0)
                 {
                     echo "<center>";

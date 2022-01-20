@@ -55,30 +55,37 @@
                 </div>';
 
                 $choose = isset($_POST['choose']) ? $_POST['choose'] : '';
+                $check3=1;
 
-                $check_query1="SELECT nazwa_druzyny FROM udzialy where nazwa_druzyny='$choose'";
-                $check_result1=mysqli_query($conn, $check_query1);
-                $check1=mysqli_num_rows($check_result1);
-                $check_query2="SELECT nazwa_druzyny FROM zawodnicy where nazwa_druzyny='$choose'";
-                $check_result2=mysqli_query($conn, $check_query2);
-                $check2=mysqli_num_rows($check_result2);
-
-                if ($check1 == 0 && $check2 == 0)
+                if ($choose != 'Wybierz drużynę...')
                 {
-                    if ($choose != 'Wybierz drużynę...' && strlen($choose) > 1) {
-                        $query3="DELETE from druzyny where nazwa_druzyny='$choose'";
-                        if (mysqli_query($conn, $query3) == TRUE) {
-                            echo "<meta http-equiv='refresh' content='0'>"; 
-                        }     
+                    $check_query1="SELECT nazwa_druzyny FROM udzialy where nazwa_druzyny='$choose'";
+                    $check_result1=mysqli_query($conn, $check_query1);
+                    $check1=mysqli_num_rows($check_result1);//
+                    $check_query2="SELECT nazwa_druzyny FROM zawodnicy where nazwa_druzyny='$choose'";
+                    $check_result2=mysqli_query($conn, $check_query2);
+                    $check2=mysqli_num_rows($check_result2);//
+                    $check3=0;
+                }
+
+                if($check3==0)
+                {
+                    if ($check1 == 0 && $check2 == 0)
+                    {
+                        if ($choose != 'Wybierz drużynę...' && strlen($choose) > 1) {
+                            $query3="DELETE from druzyny where nazwa_druzyny='$choose'";
+                            if (mysqli_query($conn, $query3) == TRUE) {
+                                echo "<meta http-equiv='refresh' content='0'>"; 
+                            }     
+                        }
+                                    
                     }
-                                
+                    else
+                    {
+                        echo '<center>Nie udało się usunąć rekordu. Upewnij się, że nie jest on używany w innych tabelach!<center>';
+                    }
                 }
-                else
-                {
-                    echo '<center>Nie udało się usunąć rekordu. Upewnij się, że nie jest on używany w innych tabelach!<center>';
-                }
-
-                
+ 
                 $query2="SELECT nazwa_druzyny, data_zalozenia, kraj_zalozenia from druzyny";
                 $result2=mysqli_query($conn, $query2);
                 
